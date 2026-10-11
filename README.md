@@ -3,6 +3,21 @@
 Answers equipment and safety questions from PDF manuals, shows the source page,
 and refuses when the documents don't contain the answer.
 
+## Results
+
+Tested on 228 pages of equipment manuals with a 30-question test set (`questions.csv`):
+
+| Measure | Result |
+|---|---|
+| Answerable questions answered correctly | **23 of 25** |
+| Unanswerable questions correctly refused | **5 of 5** |
+| Right page retrieved (retrieval hit rate) | **96% → 100%** after benchmarking passage sizes |
+
+I built the retrieval twice: once in plain Python with NumPy (cosine similarity by hand),
+and once with LangChain, to understand what the framework does underneath.
+Everything runs locally with Ollama (`nomic-embed-text` for embeddings, `llama3.2` for answers),
+so no document leaves the computer.
+
 ## How it works
 1. `ingest.py` reads every PDF in `docs/`, splits each page into passages,
    turns each passage into a vector with an embedding model, and saves them.
